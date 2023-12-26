@@ -1,5 +1,5 @@
 from app import app
-from models import db, Cupcake
+from models import db, connect_db, Cupcake
 
 
 db.drop_all()
@@ -8,7 +8,7 @@ db.create_all()
 c1 = Cupcake(
     flavor="cherry",
     size="large",
-    rating=5,
+    rating=5
 )
 
 c2 = Cupcake(
