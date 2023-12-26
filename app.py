@@ -31,16 +31,18 @@ def get_cupcake(id):
 def create_cupcake():
     """
     Create a new cupcake
-    return 201 and jsonified cupcake data
+    return 201 and JSON {cupcake: {id, flavor, size, rating, image}}
     """
     flavor = request.json["flavor"]
     size = request.json["size"]
     rating = request.json["rating"]
     image = request.json.get("image")
+    
     new_cupcake = Cupcake(flavor=flavor,size=size,rating=rating,image=image)
-    cupcake_serialized = new_cupcake.serialize()
+    
     
     db.session.add(new_cupcake)
     db.session.commit()
-
-    return (jsonify(cupcake_serialized), 201)
+    cupcake_serialized = new_cupcake.serialize()
+    
+    return (jsonify(cupcake=cupcake_serialized), 201)
