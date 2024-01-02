@@ -3,11 +3,36 @@
 
 {% block content %}
 
-<ul>
-    {% for cupcake in cupcakes %}
-    <li>{{cupcake.flavor}}</li>
-    {% endfor %}
-</ul>
+<div class="container-fluid text-center">
+    <h1 class="display-1">Cupcakes</h1>
+    
+    <div class="col col-md-6 mx-auto mb-3 p-2 border border-5 rounded border-info-subtle text-start" id="cupcake-form">
+        <form id="cupcake-add-form">
+        {{ form.hidden_tag() }}
+        {% for field in form if field.widget.input_type != 'hidden' %}
+            <p>
+            {{ field.label(class_='form-label') }}
+            {{ field(class_='form-control') }}
+
+            {% for error in field.errors %}
+                {{ error }}
+            {% endfor %}
+            </p>
+        {% endfor %}
+        <div class="d-grid">
+            <button type="submit" class="btn btn-success">Add Cupcake</button>
+        </div>
+        
+        </form>
+
+    </div>
+    <div class="col col-md-6 m-auto border border-5 rounded border-info-subtle">
+        <ul class="list-group">
+        </ul>
+    </div>
+    
+</div>
+
 
 
 {% endblock %}

@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, jsonify
-from models import db, connect_db, Cupcake  
+from models import db, connect_db, Cupcake 
+from forms import AddCupcakeForm 
 from SECRET import SECRET_KEY
 
 app = Flask(__name__)
@@ -12,8 +13,11 @@ connect_db(app)
 
 @app.route('/')
 def home():
-    cupcakes = Cupcake.query.all()
-    return render_template('home.html',cupcakes=cupcakes)
+    form = AddCupcakeForm()
+    
+    return render_template('home.html', form=form)
+
+##############API ROUTES#################
 
 @app.route('/api/cupcakes')
 def list_cupcakes():
@@ -44,5 +48,36 @@ def create_cupcake():
     db.session.add(new_cupcake)
     db.session.commit()
     cupcake_serialized = new_cupcake.serialize()
-    
+
     return (jsonify(cupcake=cupcake_serialized), 201)
+
+@app.route('/api/cupcakes/<int:id>', methods=["PATCH"])
+def update_cupcake(id):
+    """
+    get and update cookie
+    404 if cookie not found
+    We can assume all fields will be filled
+    """
+    cupcake = Cupcake.query.get_or_404(id)
+
+    cupcake.flavor = request.json["flavor"]
+    cupcake.size = request.json["size"]
+    cupcake.rating = request.json["rating"]
+    cupcake.image = request.json["image"]
+
+    db.session.commit()
+
+    return (jsonify(cupcake=cupcake.serialize()))
+
+@app.route('/api/cupcakes/<int:id>', methods=["DELETE"])
+def delete_cupcake(id):
+    """
+    Get and delete cookie
+    404 if cookie not found
+    """
+
+    cupcake = Cupcake.query.get_or_404(id)
+
+    db.session.delete(cupcake)
+    db.session.commit()
+    return jsonify(message='Deleted')

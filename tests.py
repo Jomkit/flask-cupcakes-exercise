@@ -107,3 +107,44 @@ class CupcakeViewsTestCase(TestCase):
             })
 
             self.assertEqual(Cupcake.query.count(), 2)
+
+    def test_update_cupcake(self):
+        with app.test_client() as client:
+            url = f'/api/cupcakes/{self.cupcake.id}'
+            resp = client.patch(url, json=CUPCAKE_DATA_2)
+
+            self.assertEqual(resp.status_code, 200)
+
+            data = resp.json
+
+            # check that the id is still an int
+            self.assertIsInstance(data['cupcake']['id'], int)
+            del data['cupcake']['id']
+            
+            # updated cupcake should have values of CUPCAKE_DATA_2
+            self.assertEqual(data, {
+                "cupcake": {
+                    "flavor": "TestFlavor2",
+                    "size": "TestSize2",
+                    "rating": 10,
+                    "image": "http://test.com/cupcake2.jpg"
+                }
+            })
+
+            # Since we are updating a cupcake record, we should only have
+            # one cupcake in our db
+            count = Cupcake.query.count()
+            self.assertEqual(count, 1)
+
+    def test_delete_cupcake(self):
+        with app.test_client() as client:
+            url = f'/api/cupcakes/{self.cupcake.id}'
+            resp = client.delete(url, json=CUPCAKE_DATA)
+
+            self.assertEqual(resp.status_code, 200)
+
+            data = resp.json
+
+            # check we get message 'Deleted'
+            self.assertEqual(data['message'], 'Deleted')
+            self.assertEqual(Cupcake.query.count(), 0)
