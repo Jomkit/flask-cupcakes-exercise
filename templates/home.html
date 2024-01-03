@@ -2,6 +2,32 @@
 {% block title %}Home Page{% endblock %}
 
 {% block content %}
+<!-- Button trigger modal -->
+{# <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button> #}
+
+<!-- Modal -->
+<div class="modal fade" id="cupcakeModal" tabindex="-1" aria-labelledby="cupcakeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="cupcakeModalLabel"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid row">
+            <div class="col cupcake-img"></div>
+            <div class="col cupcake-details"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="container-fluid text-center">
     <h1 class="display-1">Cupcakes</h1>

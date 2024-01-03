@@ -36,7 +36,7 @@ def create_cupcake():
     """
     Create a new cupcake
     return 201 and JSON {cupcake: {id, flavor, size, rating, image}}
-    """
+    """ 
     flavor = request.json["flavor"]
     size = request.json["size"]
     rating = request.json["rating"]
