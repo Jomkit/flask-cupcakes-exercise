@@ -32,13 +32,13 @@
 <div class="container-fluid text-center">
     <h1 class="display-1">Cupcakes</h1>
     
-    <div class="col col-md-6 mx-auto mb-3 p-2 border border-5 rounded border-info-subtle text-start" id="cupcake-form">
+    <div class="col col-md-6 mx-auto mb-3 p-2 border border-5 rounded border-info-subtle text-start">
         <form id="cupcake-add-form">
         {{ form.hidden_tag() }}
         {% for field in form if field.widget.input_type != 'hidden' %}
             <p>
             {{ field.label(class_='form-label') }}
-            {{ field(class_='form-control') }}
+            {{ field(class_='form-control cc-deets') }}
 
             {% for error in field.errors %}
                 {{ error }}
@@ -55,7 +55,7 @@
 
     {# search bar below #}
     <div class="col col-md-6 mx-auto mb-3 p-2 border border-5 rounded border-secondary-subtle text-start">
-        <form action="#">
+        <form id="search-cupcake-form">
             <div class="container row">
         
                 <label class="visually-hidden" for="search-cupcake">Search Bar</label>

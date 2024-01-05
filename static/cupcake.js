@@ -69,7 +69,7 @@ $('#cupcake-add-form').on('submit', addCupcakeForm);
 
 async function addCupcakeForm(e){
     e.preventDefault();
-    const cupcakeData = $('.form-control');
+    const cupcakeData = $('.cc-deets');
 
     let serialized = {};
     for(let i in cupcakeData){
@@ -84,3 +84,13 @@ async function addCupcakeForm(e){
 }
 
 // Handle cupcake detail changes
+
+// Handle searching for cupcake
+$('#search-cupcake-form').on('submit', searchCupcakeForm);
+
+async function searchCupcakeForm(e){
+    e.preventDefault();
+    const searchTerm = JSON.stringify($('#search-cupcake'));
+    resp = await axios.get(`${BASE_URL}/search`, searchTerm);
+    
+}
