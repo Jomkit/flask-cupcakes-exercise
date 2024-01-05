@@ -25,20 +25,24 @@ function cupcakeDetails(cupcake){
     return html;
 }
 
-async function listAllCupcakes(){
-    const resp = await axios.get(BASE_URL);
-    const cupcakes = resp.data['cupcakes'];
+function listCupcakes(cupcakes){
+    $('ul').html('');   // Reset onscreen list of cupcakes
 
     for(i=0; i<=cupcakes.length; i++){
-        let cupcake = resp.data['cupcakes'][i];
+        let cupcake = cupcakes[i];
         let html = cupcakeDetails(cupcake);
         $("ul").append(html);
     }
+}
+
+async function allCupcakes(){
+    const resp = await axios.get(BASE_URL);
+    listCupcakes(resp.data['cupcakes']);
     
     return resp;
 }
 
-listAllCupcakes();
+allCupcakes();
 
 $('ul').click(eventHandler);
 
@@ -90,7 +94,9 @@ $('#search-cupcake-form').on('submit', searchCupcakeForm);
 
 async function searchCupcakeForm(e){
     e.preventDefault();
-    const searchTerm = JSON.stringify($('#search-cupcake'));
-    resp = await axios.get(`${BASE_URL}/search`, searchTerm);
-    
+    const searchTerm = $('#search-cupcake').val();
+    resp = await axios.get(`${BASE_URL}/search?term=${searchTerm}`);
+    listCupcakes(resp.data.cupcakes);
+
+    return resp;
 }
