@@ -79,6 +79,7 @@ async function addCupcakeForm(e){
     let html = cupcakeDetails(resp.data.cupcake);
     $('ul').append(html);
 
+    $('#cupcake-add-form').trigger('reset');
     return resp;
 }
 
