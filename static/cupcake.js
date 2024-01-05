@@ -90,7 +90,8 @@ async function addCupcakeForm(e){
 // Handle cupcake detail changes
 
 // Handle searching for cupcake
-$('#search-cupcake-form').on('submit', searchCupcakeForm);
+// $('#search-cupcake-form').on('submit', searchCupcakeForm);
+$('#search-cupcake').on('keyup', searchCupcakeForm);
 
 async function searchCupcakeForm(e){
     e.preventDefault();
