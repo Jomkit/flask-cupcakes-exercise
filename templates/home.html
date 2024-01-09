@@ -32,26 +32,41 @@
 <div class="container-fluid text-center">
     <h1 class="display-1">Cupcakes</h1>
     
-    <div class="col col-md-6 mx-auto mb-3 p-2 border border-5 rounded border-info-subtle text-start">
-        <form id="cupcake-add-form">
-        {{ form.hidden_tag() }}
-        {% for field in form if field.widget.input_type != 'hidden' %}
-            <p>
-            {{ field.label(class_='form-label') }}
-            {{ field(class_='form-control cc-deets') }}
-
-            {% for error in field.errors %}
-                {{ error }}
-            {% endfor %}
-            </p>
-        {% endfor %}
-        <div class="d-grid">
-            <button type="submit" class="btn btn-success">Add Cupcake</button>
-        </div>
+<div class="col col-md-6 mx-auto mb-3 p-2 border border-5 rounded border-info-subtle text-start">
+  <div class="accordion" id="accordionAddCupcakeForm">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <strong>Add New Cupcake</strong>
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionAddCupcakeForm">
+        <div class="accordion-body">
         
-        </form>
+          <form id="cupcake-add-form">
+            {{ form.hidden_tag() }}
+            {% for field in form if field.widget.input_type != 'hidden' %}
+                <p>
+                {{ field.label(class_='form-label') }}
+                {{ field(class_='form-control cc-deets') }}
 
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+                </p>
+            {% endfor %}
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success">Add Cupcake</button>
+            </div>
+          </form>       
+
+        </div>
+      </div>
     </div>
+
+  </div>
+
+</div>
 
     {# search bar below #}
     <div class="col col-md-6 mx-auto mb-3 p-2 border border-5 rounded border-secondary-subtle text-start">
@@ -59,17 +74,19 @@
             <div class="container row">
         
                 <label class="visually-hidden" for="search-cupcake">Search Bar</label>
-                <div class="col col-lg-10">
+                <div class="col col-lg-12">
                     <input class="form-control" id="search-cupcake" name="search-cupcake" type="text" placeholder="Search cupcakes...">
                 </div>
                 <div class="d-grid col-lg-2">
-                    <button class="btn btn-primary" type="submit">Search</button>
+                    <button class="btn btn-primary visually-hidden" type="submit">Search</button>
                 </div>
             </div>   
         </form>
     </div>
 
+    <h2>Cupcake List</h2>
     <div class="col col-md-6 m-auto border border-5 rounded border-info-subtle">
+      
         <ul class="list-group">
         </ul>
     </div>

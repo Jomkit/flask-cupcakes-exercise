@@ -20,7 +20,7 @@ class Cupcake {
 }
 
 function cupcakeDetails(cupcake){
-    let html = `<li class='list-group-item' id="${cupcake['id']}"><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#cupcakeModal">${cupcake['flavor']}</button></li>`;
+    let html = `<li class='list-group-item' id="${cupcake['id']}"><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#cupcakeModal">${cupcake['flavor']}</button><div class="position-absolute top-0 end-0 mt-2"><button class="btn btnTrash">&#10006;</button></div></li>`;
 
     return html;
 }
@@ -44,13 +44,32 @@ async function allCupcakes(){
 
 allCupcakes();
 
+// functionality for deleting cupcake
+// $('.btnTrash').on('click', deleteCupcake);
+
+async function deleteCupcake(id){
+    const resp = await axios.delete(`${BASE_URL}/${id}`);
+    $(`#${id}`).remove();
+
+    return resp;
+}
+
 $('ul').click(eventHandler);
 
 async function eventHandler(evt){
 
-    // click on cupcake to get cupcake info from modal, rewriting 
-    // html to provide image, and cupcake details on the modal
-    if(evt.target.tagName == 'BUTTON'){
+
+    if(evt.target.classList.contains('btnTrash')){
+        // Delete cupcake from db and DOM
+        console.log('Delete');
+        const cupcake = evt.target.parentNode.parentNode;
+        console.log(cupcake.id);
+        deleteCupcake(cupcake.id);
+        return;
+    }
+    else if(evt.target.tagName == 'BUTTON'){
+        // click on cupcake to get cupcake info from modal, rewriting 
+        // html to provide image, and cupcake details on the modal
         let cup_id = evt.target.parentNode.id;
         let resp = await axios.get(`${BASE_URL}/${cup_id}`);
         let cupcake = resp.data.cupcake;
