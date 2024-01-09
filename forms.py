@@ -2,8 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, FloatField
 from wtforms.validators import InputRequired
 
-class AddCupcakeForm(FlaskForm):
-    """Form for adding cupcakes"""
+class CupcakeForm(FlaskForm):
+    """Form for adding or editting cupcakes"""
 
     flavor = StringField("Cupcake Flavor",
                          validators=[InputRequired(message='Please describe cupcake flavor')])

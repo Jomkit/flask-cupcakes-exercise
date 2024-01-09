@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, jsonify
 from models import db, connect_db, Cupcake 
-from forms import AddCupcakeForm 
+from forms import CupcakeForm 
 from SECRET import SECRET_KEY
 
 app = Flask(__name__)
@@ -13,7 +13,7 @@ connect_db(app)
 
 @app.route('/')
 def home():
-    form = AddCupcakeForm()
+    form = CupcakeForm()
     
     
     return render_template('home.html', form=form)
