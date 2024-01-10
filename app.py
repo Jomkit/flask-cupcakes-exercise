@@ -15,6 +15,7 @@ connect_db(app)
 def home():
     form = AddCupcakeForm()
     
+    
     return render_template('home.html', form=form)
 
 ##############API ROUTES#################
@@ -24,6 +25,20 @@ def list_cupcakes():
     """Get all cupcakes and jsonify them"""
     all_cupcakes = [cupcake.serialize() for cupcake in Cupcake.query.all()]
     return jsonify(cupcakes=all_cupcakes)
+
+@app.route('/api/cupcakes/search')
+def search_cupcakes():
+    """
+    Get route, search for cupcakes based on a string
+    
+    Don't need to error handle empty string thanks to 
+    the wildcard in the regex passed to ilike SQL operator
+    below
+    """
+    term = request.args.get('term')
+    filtered_cupcakes = [cupcake.serialize() for cupcake in Cupcake.query.filter(Cupcake.flavor.ilike(f'%{term}%'))]
+
+    return jsonify(cupcakes=filtered_cupcakes)
 
 @app.route('/api/cupcakes/<int:id>')
 def get_cupcake(id):
